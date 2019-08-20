@@ -10,9 +10,16 @@ namespace Forum.Models.Reply
         public int Id { get; set; }
         public string AuthorId { get; set; }
         public string AuthorName { get; set; }
+
         public DateTime Created { get; set; }
         public string ReplyContent { get; set; }
 
         public int PostId { get; set; }
+        public string PostTitle { get; set; }
+        public string PostContent { get; set; }
+
+        public string ForumName { get; set; }
+        public int ForumId { get; set; }
+
     }
 }

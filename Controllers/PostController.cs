@@ -56,6 +56,18 @@ namespace Forum.Controllers
             return View(model);
         }
 
+        public IActionResult Edit(int id)
+        {
+            var post = _postService.GetById(id);
+
+            var model = new PostIndexModel
+            {
+                PostContent = post.Content
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddPost(NewPostModel model)
         {
@@ -66,6 +78,14 @@ namespace Forum.Controllers
             _postService.Add(post).Wait();
 
             return RedirectToAction("Index", "Post", new {id = post.Id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditPost(PostIndexModel model)
+        {
+            _postService.EditPostContent(model.Id, model.PostContent).Wait();
+
+            return RedirectToAction("Index", "Post", new { id = model.Id });
         }
 
         private Post BuildPost(NewPostModel model, ApplicationUser user)

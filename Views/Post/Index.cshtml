@@ -27,33 +27,64 @@
             </div>
         </div>
 
-        <div id="replyDevider" class="row"></div>
+        <div class="row">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <div class="col">
+                    <span>
+                        <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-info">
+                            Post Reply
+                        </a>
+                    </span>
+                </div>
+            }
+            @if (Model.AuthorName == Context.User.Identity.Name)
+            {
+                <div class="col">
+                    <span>
+                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">
+                            Edit
+                        </a>
+                    </span>
+                </div>
+            }
+        </div>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div class="row">
-                <span>
-                    <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-info">
-                        Post Reply
-                    </a>
-                </span>
-            </div>
-        }
 
         @if (Model.Replies.Any())
         {
             foreach (var reply in Model.Replies)
             {
-                <div class="row replyContent">
-                    <div class="col-md-3 replyAuthorContainer">
-                        @Model.AuthorName
+                <div class="row" id="postIndexContent">
+                    <div class="col-md-3 postAuthorContainer">
+                        <div class="row">
+                            <div class="col">
+                                @Model.AuthorName
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span class="postData">@reply.Created</span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="postData">@reply.Created</span>
-                    <div class="col-md-9 replyContentContainer">
+                    <div class="col-md-9 postContentContainer">
                         <div class="postContent">
                             @Html.Raw(reply.ReplyContent)
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    @if (Model.AuthorName == Context.User.Identity.Name)
+                    {
+                        <div class="col">
+                            <span>
+                                <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="btn btn-info">
+                                    Edit
+                                </a>
+                            </span>
+                        </div>
+                    }
                 </div>
             }
         }

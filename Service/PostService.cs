@@ -51,9 +51,18 @@ namespace Forum.Service
             throw new NotImplementedException();
         }
 
-        public Task EditPostContent(int id, string newContent)
+        public async Task EditPostContent(int id, string newContent)
         {
-            throw new NotImplementedException();
+            var post = GetById(id);
+            post.Content = newContent;
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddReply(PostReply reply)
+        {
+            _context.PostReplies.Add(reply);
+            await _context.SaveChangesAsync();
         }
     }
 }
