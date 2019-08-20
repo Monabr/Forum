@@ -1,8 +1,27 @@
-﻿@{
+﻿@model Forum.Models.Forum.ForumIndexModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to forum about ice cream</h1>
+    <p>Choose forum for your favorite ice cream</p>
 </div>
+
+<table id="forumIndexTable" class="table table-hover">
+    <tbody>
+        @foreach (var forum in Model.ForumList)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Forum" asp-action="Topic" asp-route-id="@forum.Id">
+                        @forum.Name
+                    </a>
+                </td>
+                <td>
+                    @forum.Description
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

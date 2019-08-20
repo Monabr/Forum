@@ -1,30 +1,70 @@
 ﻿
 @model Forum.Models.Post.PostIndexModel
 
-<h1>@Model.Title</h1>
-
-<div>
-    Author: @Model.AuthorName
-    Created: @Model.Created
-</div>
-
-<div>
-    @Model.PostContent
-</div>
-
-@if (Model.Replies.Any())
-{
-    foreach (var reply in Model.Replies)
-    {
-        <div>
-            <div>
-                Reply Author: @reply.AuthorName
-                Reply Created: @reply.Created
+    <div class="container body-content">
+        <div class="row postHeader">
+            <span class="postIndexTitle">
+                @Model.Title
+            </span>
+        </div>
+        <div id="postIndexContent" class="row">
+            <div class="col-md-3 postAuthorContainer">
+                <div class="row">
+                    <div class="col">
+                        @Model.AuthorName
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span class="postData">@Model.Created</span>
+                    </div>
+                </div>
             </div>
-
-            <div>
-                Reply: @reply.ReplyContent
+            <div class="col-md-9 postContentContainer">
+                <div class="postContent">
+                    @Html.Raw(Model.PostContent)
+                </div>
             </div>
         </div>
-    }
-}
+
+        <div id="replyDevider" class="row"></div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="row">
+                <span>
+                    <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-info">
+                        Post Reply
+                    </a>
+                </span>
+            </div>
+        }
+
+        @if (Model.Replies.Any())
+        {
+            foreach (var reply in Model.Replies)
+            {
+                <div class="row replyContent">
+                    <div class="col-md-3 replyAuthorContainer">
+                        @Model.AuthorName
+                    </div>
+                    <span class="postData">@reply.Created</span>
+                    <div class="col-md-9 replyContentContainer">
+                        <div class="postContent">
+                            @Html.Raw(reply.ReplyContent)
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        else
+        {
+            <div class="noPosts">
+                <h3 class="text-center">
+                    There are no replies <br />
+                </h3>
+            </div>
+        }
+
+    </div>

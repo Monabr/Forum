@@ -1,5 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿
 
 a.navbar-brand {
   white-space: normal;
@@ -7,8 +6,6 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   font-size: 14px;
 }
@@ -34,23 +31,44 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+.postAuthorContainer {
+    padding: 12px;
+    color: #444;
+}
+
+.postContentContainer {
+    color: #444;
+    padding: 22px;
+    border-left: 1px solid #ddd;
+}
+
+#postIndexContent {
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+}
+
+.postHeader {
+    background-color: #dddddd;
+    padding: 8px 0px 24px 24px;
+}
+
+
+
+
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+    height: 60px;
+  line-height: 60px;
 }
