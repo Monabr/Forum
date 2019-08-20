@@ -1,6 +1,6 @@
 ﻿@model Forum.Models.Reply.PostReplyModel
 
-<div class="container body-content">
+<div class="container">
     <div class="row">
         <div id="createReply" class="col">
             <form asp-action="EditReply" method="post" id="addPostForm">
@@ -11,10 +11,10 @@
                     <span asp-validation-for="ReplyContent" class="text-danger"></span>
                 </div>
                 <button type="submit" id="submitRaplyBtn" class="btn btn-primary">Submit</button>
-                <input asp-for="AuthorId" type="hidden" />
-                <input asp-for="PostId" type="hidden" />
-                <input asp-for="ForumId" type="hidden" />
-                <input asp-for="Id" type="hidden" />
+                <input asp-for="AuthorId" type="hidden"/>
+                <input asp-for="PostId" type="hidden"/>
+                <input asp-for="ForumId" type="hidden"/>
+                <input asp-for="Id" type="hidden"/>
             </form>
         </div>
     </div>

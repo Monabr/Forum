@@ -7,9 +7,19 @@
     <h1 class="display-4">Welcome to forum about ice cream</h1>
     <p>Choose forum for your favorite ice cream</p>
 </div>
-
-<table id="forumIndexTable" class="table table-hover">
-    <tbody>
+@if ((Context.User.Identity.IsAuthenticated) && (!(Model.User.EmailConfirmed)))
+{
+    <h3 class="text-center">
+        End your email verification to see the content or we can send email verification
+        <a asp-controller="Home" asp-action="Verification" asp-route-id="@Model.User">
+            again
+        </a>
+    </h3>
+}
+else
+{
+    <table id="forumIndexTable" class="table table-hover">
+        <tbody>
         @foreach (var forum in Model.ForumList)
         {
             <tr>
@@ -23,5 +33,6 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}

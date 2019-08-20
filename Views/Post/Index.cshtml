@@ -1,101 +1,96 @@
-﻿
-@model Forum.Models.Post.PostIndexModel
+﻿@model Forum.Models.Post.PostIndexModel
 
-    <div class="container body-content">
-        <div class="row postHeader">
-            <span class="postIndexTitle">
-                @Model.Title
-            </span>
-        </div>
-        <div id="postIndexContent" class="row">
-            <div class="col-md-3 postAuthorContainer">
-                <div class="row">
-                    <div class="col">
-                        @Model.AuthorName
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span class="postData">@Model.Created</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9 postContentContainer">
-                <div class="postContent">
-                    @Html.Raw(Model.PostContent)
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            @if (Context.User.Identity.IsAuthenticated)
-            {
-                <div class="col">
-                    <span>
-                        <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-info">
-                            Post Reply
-                        </a>
-                    </span>
-                </div>
-            }
-            @if (Model.AuthorName == Context.User.Identity.Name)
-            {
-                <div class="col">
-                    <span>
-                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">
-                            Edit
-                        </a>
-                    </span>
-                </div>
-            }
-        </div>
-
-
-        @if (Model.Replies.Any())
-        {
-            foreach (var reply in Model.Replies)
-            {
-                <div class="row" id="postIndexContent">
-                    <div class="col-md-3 postAuthorContainer">
-                        <div class="row">
-                            <div class="col">
-                                @Model.AuthorName
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <span class="postData">@reply.Created</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-9 postContentContainer">
-                        <div class="postContent">
-                            @Html.Raw(reply.ReplyContent)
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    @if (Model.AuthorName == Context.User.Identity.Name)
-                    {
-                        <div class="col">
-                            <span>
-                                <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="btn btn-info">
-                                    Edit
-                                </a>
-                            </span>
-                        </div>
-                    }
-                </div>
-            }
-        }
-
-        else
-        {
-            <div class="noPosts">
-                <h3 class="text-center">
-                    There are no replies <br />
-                </h3>
-            </div>
-        }
-
+<div class="container">
+    <div class="row postHeader">
+        @Model.Title
     </div>
+    <div class="row">
+        <div class="col-md-3 postAuthorContainer">
+            <div class="row">
+                <div class="col">
+                    @Model.AuthorName
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    @Model.Created
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 postContentContainer">
+
+            @Html.Raw(Model.PostContent)
+
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <div class="col">
+                <span>
+                    <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-info">
+                        Post Reply
+                    </a>
+                </span>
+            </div>
+        }
+        @if (Model.AuthorName == Context.User.Identity.Name)
+        {
+            <div class="col">
+                <span>
+                    <a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">
+                        Edit
+                    </a>
+                </span>
+            </div>
+        }
+    </div>
+
+
+    @if (Model.Replies.Any())
+    {
+        foreach (var reply in Model.Replies)
+        {
+            <div class="row" id="postIndexContent">
+                <div class="col-md-3 postAuthorContainer">
+                    <div class="row">
+                        <div class="col">
+                            @Model.AuthorName
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            @reply.Created
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 postContentContainer">
+
+                    @Html.Raw(reply.ReplyContent)
+
+                </div>
+            </div>
+            <div class="row">
+                @if (Model.AuthorName == Context.User.Identity.Name)
+                {
+                    <div class="col">
+                        <span>
+                            <a asp-controller="Reply" asp-action="Edit" asp-route-id="@reply.Id" class="btn btn-info">
+                                Edit
+                            </a>
+                        </span>
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    else
+    {
+        <h3 class="text-center">
+            There are no replies <br/>
+        </h3>
+    }
+
+</div>

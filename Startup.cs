@@ -49,6 +49,7 @@ namespace Forum
             services.AddScoped<IForum, ForumService>();
             services.AddScoped<IPost, PostService>();
             services.AddScoped<IPostReply, PostReplyService>();
+            services.AddScoped<IEmailService, EmailService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

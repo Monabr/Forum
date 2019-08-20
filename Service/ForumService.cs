@@ -30,29 +30,5 @@ namespace Forum.Service
                 .Include(forum=>forum.Posts);
         }
 
-        public IEnumerable<ApplicationUser> ApplicationUsers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Create(ForumModel forum)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Delete(int forumId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateForumTitle(int forumId, string newTitle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateForumDescription(int forumId, string newDescription)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

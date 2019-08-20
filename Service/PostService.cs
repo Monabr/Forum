@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Forum.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Forum.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Service
 {
-    public class PostService:IPost
+    public class PostService : IPost
     {
         private readonly ApplicationDbContext _context;
         public PostService(ApplicationDbContext context)
@@ -23,16 +22,6 @@ namespace Forum.Service
                 .First();
         }
 
-        public IEnumerable<Post> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Post> GetFilteredPosts(string searchQuery)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Post> GetPostsByForum(int id)
         {
             return _context.Forums
@@ -46,10 +35,6 @@ namespace Forum.Service
             await _context.SaveChangesAsync();
         }
 
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task EditPostContent(int id, string newContent)
         {

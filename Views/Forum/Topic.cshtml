@@ -1,70 +1,66 @@
 ﻿@model Forum.Models.Forum.ForumTopicModel
 
-    <div class="container body-content">
-        <div class="row sectionHeader">
-            <div class="col"><h1>@Model.Forum.Name forum</h1></div>
-            @if (Context.User.Identity.IsAuthenticated)
-            {
-                <span id="headingBnt">
-                    <a asp-controller="Post"
-                       asp-action="Create"
-                       asp-route-id="@Model.Forum.Id" class="btn btn-primary">
-                        Create Post
-                    </a>
-                </span>
-            }
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <div class="col"><p>You must be a registered member to create a new post</p></div>
-            }
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>@Model.Forum.Name forum</h1>
         </div>
-        <div class="row forumIndexContent">
-            @if (Model.Posts.Any())
-            {
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                    @foreach (var post in Model.Posts)
-                    {
-                        <tr>
-                            <td>
-                                <div class="postData">
-                                    <div class="postTitle">
-                                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
-                                            @post.Title
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="forumSubTitle">
-                                    @post.AuthorName
-                                    <span class="postDate">
-                                        @post.DatePosted
-                                    </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="forumPostCount">
-                                    Replies: @post.RepliesCount
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <div class="noPosts">
-                    <h3>
-                        There are no @Model.Forum.Name posts yet. <br/>
-                        Try to
-                        <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id">
-                            create
-                        </a>
-                        one.
-                    </h3>
-                </div>
-            }
-        </div>
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <span id="headingBnt">
+                <a asp-controller="Post"
+                   asp-action="Create"
+                   asp-route-id="@Model.Forum.Id" class="btn btn-primary">
+                    Create Post
+                </a>
+            </span>
+        }
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="col">
+                <p>You must be a registered member to create a new post</p>
+            </div>
+        }
     </div>
+    <div class="row">
+        @if (Model.Posts.Any())
+        {
+            <table class="table table-bordered table-hover">
+                <tbody>
+                @foreach (var post in Model.Posts)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                    @post.Title
+                                </a>
+                            </div>
+                            <div>
+                                @post.AuthorName
+                                @post.DatePosted
+                            </div>
+                        </td>
+                        <td>
+                            Replies: @post.RepliesCount
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h3>
+                There are no @Model.Forum.Name posts yet. <br/>
+                Try to
+                <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id">
+                    create
+                </a>
+                one.
+            </h3>
+        }
+    </div>
+</div>
 
 

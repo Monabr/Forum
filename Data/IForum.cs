@@ -9,11 +9,6 @@ namespace Forum.Data
     {
         ForumModel GetById(int id);
         IEnumerable<ForumModel> GetAll();
-        IEnumerable<ApplicationUser> ApplicationUsers();
 
-        Task Create(ForumModel forum);
-        Task Delete(int forumId);
-        Task UpdateForumTitle(int forumId, string newTitle);
-        Task UpdateForumDescription(int forumId, string newDescription);
     }
 }

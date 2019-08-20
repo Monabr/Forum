@@ -1,6 +1,6 @@
 ﻿@model Forum.Models.Post.PostIndexModel
 
-<div class="container body-content">
+<div class="container">
     <div class="row">
         <div id="createReply" class="col">
             <form asp-action="EditPost" method="post" id="addPostForm">
@@ -11,7 +11,7 @@
                     <span asp-validation-for="PostContent" class="text-danger"></span>
                 </div>
                 <button type="submit" id="submitRaplyBtn" class="btn btn-primary">Submit</button>
-                <input asp-for="Id" type="hidden" />
+                <input asp-for="Id" type="hidden"/>
             </form>
         </div>
     </div>

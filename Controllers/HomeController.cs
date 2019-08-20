@@ -1,4 +1,5 @@
-﻿using Forum.Data;
+﻿using System;
+using Forum.Data;
 using Forum.Models;
 using Forum.Models.Forum;
 using Forum.Models.Post;
@@ -6,6 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using Forum.Service;
+using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Controllers
 {
@@ -17,17 +22,17 @@ namespace Forum.Controllers
         //    throw new NotImplementedException();
         //}
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        
 
         private readonly IForum _forumService;
-        private readonly IPost _postService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailService _emailService;
 
-        public HomeController(IForum forumService)
+        public HomeController(IForum forumService, UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             _forumService = forumService;
+            _userManager = userManager;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -40,12 +45,31 @@ namespace Forum.Controllers
                     Description = forum.Description
                 });
 
-            var model = new ForumIndexModel
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            ForumIndexModel model;
+    
+            try
             {
-                ForumList = forums
-            };
+                model = new ForumIndexModel
+                {
+                    ForumList = forums,
+                    User = user.Result
+                };
+            }
+            catch (Exception e)
+            {
+                model = new ForumIndexModel
+                {
+                    ForumList = forums
+                };
+            }
+            
 
             return View(model);
+        }
+        public IActionResult Privacy()
+        {
+            return View();
         }
 
         public IActionResult Topic(int id)
@@ -71,6 +95,22 @@ namespace Forum.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Verification(ApplicationUser user)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { userId = user.Id, code = code },
+                protocol: Request.Scheme);
+
+
+            await _emailService.SendEmailAsync(user.Email, "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            return View();
         }
 
         private ForumListingModel BuildForumListing(Post post)
