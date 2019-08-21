@@ -97,20 +97,21 @@ namespace Forum.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Verification(ApplicationUser user)
+        public async Task<IActionResult> Verification(string id)
         {
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var user = _userManager.FindByIdAsync(id);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Result);
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = user.Id, code = code },
+                values: new {area = "Identity", userId = user.Result.Id, code = code },
                 protocol: Request.Scheme);
 
 
-            await _emailService.SendEmailAsync(user.Email, "Confirm your email",
+            await _emailService.SendEmailAsync(user.Result.Email, "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            return View();
+            return LocalRedirect(Url.Content("~/"));
         }
 
         private ForumListingModel BuildForumListing(Post post)

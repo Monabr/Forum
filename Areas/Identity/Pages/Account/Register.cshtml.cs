@@ -98,25 +98,5 @@ namespace Forum.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
-        {
-            if (userId == null || code == null)
-            {
-                return RedirectToAction("Privacy", "Home");
-            }
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return RedirectToAction("Privacy", "Home");
-            }
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
-            else
-                return RedirectToAction("Privacy", "Home");
-        }
     }
 }

@@ -23,8 +23,8 @@ namespace Forum.Service
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.yandex.ru", 25, false);
-                await client.AuthenticateAsync("fortestproject@yandex.ru", "1234554321a");
+                await client.ConnectAsync("smtp.gmail.com", 465, true);
+                await client.AuthenticateAsync("fortestproject13@gmail.com", "12345-aA");
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);
