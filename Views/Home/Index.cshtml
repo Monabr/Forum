@@ -18,21 +18,43 @@
 }
 else
 {
-    <table id="forumIndexTable" class="table table-hover">
-        <tbody>
-        @foreach (var forum in Model.ForumList)
+    @if (Model.ForumList.Any())
+    {
+        @if (Context.User.Identity.IsAuthenticated)
         {
-            <tr>
-                <td>
-                    <a asp-controller="Forum" asp-action="Topic" asp-route-id="@forum.Id">
-                        @forum.Name
-                    </a>
-                </td>
-                <td>
-                    @forum.Description
-                </td>
-            </tr>
+
+            <div class="row">
+                <div class="col">
+                    <span>
+                        <a asp-controller="Forum" asp-action="Create" class="btn btn-info">
+                            New forum
+                        </a>
+                    </span>
+                </div>
+            </div>
         }
-        </tbody>
-    </table>
+        <table id="forumIndexTable" class="table table-hover">
+            <tbody>
+                @foreach (var forum in Model.ForumList)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Forum" asp-action="Topic" asp-route-id="@forum.Id">
+                                @forum.Name
+                            </a>
+                        </td>
+                        <td>
+                            @forum.Description
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-center">
+            There are no forums here. Register to create a new one.
+        </h3>
+    }
 }

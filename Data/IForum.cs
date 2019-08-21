@@ -9,6 +9,7 @@ namespace Forum.Data
     {
         ForumModel GetById(int id);
         IEnumerable<ForumModel> GetAll();
+        Task Create(ForumModel forum);
 
     }
 }

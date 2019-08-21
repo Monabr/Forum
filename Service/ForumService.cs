@@ -30,5 +30,10 @@ namespace Forum.Service
                 .Include(forum=>forum.Posts);
         }
 
+        public async Task Create(ForumModel forum)
+        {
+            _context.Add(forum);
+            await _context.SaveChangesAsync();
+        }
     }
 }

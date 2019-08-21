@@ -59,6 +59,26 @@ namespace Forum.Controllers
             return View(model);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddForum(AddForumModel model)
+        {
+
+            var forum = new ForumModel
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Created = DateTime.Now
+            };
+
+            await _forumService.Create(forum);
+            return RedirectToAction("Index", "Home");
+        }
+
         private ForumListingModel BuildForumListing(Post post)
         {
             var forum = post.ForumModel;
