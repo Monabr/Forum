@@ -54,9 +54,16 @@
             <h3>
                 There are no @Model.Forum.Name posts yet. <br/>
                 Try to
-                <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id">
-                    create
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Forum.Id">
+                        create
+                    </a>
+                }
+                else
+                {
+                    <span>register to create a new</span>
+                }
                 one.
             </h3>
         }
